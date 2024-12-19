@@ -1,0 +1,86 @@
+#!/bin/bash
+
+<<comment
+In bash scripts, comments are used to add explanatory notes or disable certain lines of code. Your task is to create a bash script with comments explaining what the script does.
+
+1. For single-line comments, we can use #
+2. For multi-line comments, we can use the same way I used comment in this script
+comment
+
+echo "This is how we use echo to display messages on the terminal, task 2 completed."
+
+echo "Here we will learn the use of variables. Variables in bash are used to store data and can be referenced by their name.
+Your task is to create a bash script that declares variables and assigns values to them. Let's try it, enter your name:"
+read name
+
+echo "Now let's use the variable name, so your name is $name."
+
+<<builtin_variables
+Built-in Variables in Linux
+
+1. Environment Variables
+  $HOME   - Home directory of the user
+  $PATH   - Directories for executable search
+  $USER   - Current username
+  $SHELL  - Path to the user's shell
+  $PWD    - Current working directory
+
+2. Positional Parameters
+  $0      - Name of the script
+  $1, $2  - Script arguments
+  $#      - Number of arguments passed
+  $@      - All arguments passed
+  $?      - Exit status of the last command
+  $$      - Process ID of the current shell
+
+3. Special Variables
+  $RANDOM - Random number (0-32767)
+  $UID    - User ID of the current user
+  $HOSTNAME - Hostname of the system
+  $LINENO - Current line number in the script
+
+Example Usage:
+  echo "Home Directory: $HOME"
+  echo "Path: $PATH"
+  echo "Random Number: $RANDOM"
+builtin_variables
+
+echo "Let's use some built-in variables:"
+echo "Home directory of the user: $HOME"
+echo "Directories for executable search: $PATH"
+echo "Current User: $USER"
+echo "Path to the user's shell: $SHELL"
+echo "Random number: $RANDOM"
+
+echo "Let's make use of wildcards in Linux."
+
+# Prompt the user for the directory
+read -p "Enter the directory path: " directory
+
+# Prompt the user for the file extension
+read -p "Enter the file extension (e.g., txt, jpg): " extension
+
+# Check if the directory exists
+if [[ ! -d "$directory" ]]; then
+  echo "Error: Directory $directory does not exist."
+  exit 1
+fi
+
+# List all files with the specified extension
+echo "Listing all *.$extension files in $directory:"
+ls "$directory"/*"$extension" 2>/dev/null
+
+# Check if no files were found
+if [[ $? -ne 0 ]]; then
+  echo "No files with the extension .$extension found in $directory."
+fi
+
+<<explanation
+Example Without 2>/dev/null
+If you run the script without 2>/dev/null and there are no files matching the pattern, you might see an error like this:
+ls: cannot access /path/to/directory/*.txt: No such file or directory
+
+By using `2>/dev/null`, this error message is suppressed, and you can handle the situation more gracefully in your script, as shown in the example where a custom message is printed if no files are found.
+explanation
+
+
